@@ -26,12 +26,13 @@
 
 ## 🚀 Features
 - **NestJS** Framework
+- **Apollo** (GraphQL)
 - **Prisma ORM** (PostgreSQL)
 - **Amazon RDS PostgreSQL** Integration
 - **OAuth2 Authentication with JWT**
 - **Multi-Factor Authentication (MFA)**
 - **Redis for Caching and Session Management**
-- **Swagger API Documentation**
+- **GraphQL Playground for API Documentation**
 - **Rate Limiting with Throttler**
 
 ---
