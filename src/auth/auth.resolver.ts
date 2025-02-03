@@ -9,7 +9,10 @@ import { GqlAuthGuard } from './guards/qgl-auth.guard';
 export class AuthResolver {
   constructor(private readonly authService: AuthService) {}
 
-  @Query(() => String)
+  @Query(() => String, { 
+    name: 'guardedExampleAPI',
+    description: 'Example API. Requires Authorization header with Bearer token.'
+  })
   @UseGuards(GqlAuthGuard)
   guardedExampleAPI(): string {
     return 'Example of guarded API!';

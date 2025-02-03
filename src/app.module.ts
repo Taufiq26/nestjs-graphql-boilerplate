@@ -7,6 +7,7 @@ import * as redisStore from 'cache-manager-redis-store';
 
 // Import Core Modules
 import { AuthModule } from './auth/auth.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { AuthModule } from './auth/auth.module';
     // Import Core Modules
     PrismaModule,
     AuthModule,
+    UsersModule
   ],
 })
 export class AppModule {}
