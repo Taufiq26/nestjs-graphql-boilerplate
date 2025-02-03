@@ -1,16 +1,18 @@
+import { UseGuards } from '@nestjs/common';
 import { Resolver, Mutation, Args, Query } from '@nestjs/graphql';
 import { AuthService } from './auth.service';
 import { LoginInput } from './inputs/login.input';
 import { LoginResponse } from './types/login-response.type';
+import { GqlAuthGuard } from './guards/qgl-auth.guard';
 
 @Resolver('Authentication')
 export class AuthResolver {
   constructor(private readonly authService: AuthService) {}
 
-  // Add this simple Query
   @Query(() => String)
-  authStatus() {
-    return 'Auth system is running!';
+  @UseGuards(GqlAuthGuard)
+  guardedExampleAPI(): string {
+    return 'Example of guarded API!';
   }
 
   @Mutation(() => LoginResponse, {

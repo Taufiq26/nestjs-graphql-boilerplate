@@ -30,7 +30,9 @@ export class AuthService {
   async login(user: any): Promise<LoginResponse> {
     const payload = {
       email: user.email,
-      sub: user.id
+      sub: user.id,
+      iat: Math.floor(Date.now() / 1000),
+      exp: Math.floor(Date.now() / 1000) + (7 * 24 * 60 * 60) // 7 days expiration
     };
     return {
       success: true,
@@ -38,4 +40,18 @@ export class AuthService {
       access_token: this.jwtService.sign(payload)
     };
   }
+
+  async refreshToken(user: any): Promise<LoginResponse> {
+    const payload = {
+      email: user.email,
+      sub: user.id,
+      iat: Math.floor(Date.now() / 1000),
+      exp: Math.floor(Date.now() / 1000) + (7 * 24 * 60 * 60) // 7 days for refresh token
+    };
+    return {
+      success: true,
+      message: 'Token refreshed',
+      access_token: this.jwtService.sign(payload)
+    };
+  }  
 }
