@@ -1,11 +1,13 @@
 import { UseGuards } from '@nestjs/common';
 import { Resolver, Query } from '@nestjs/graphql';
 import { GqlAuthGuard } from '../auth/guards/qgl-auth.guard';
+import { GqlThrottlerGuard } from '../common/guards/throttler-gql.guard';
 import { CurrentUser } from './decorators/current-user.decorator';
 import { User } from './entities/user.entity';
 import { UsersService } from './users.service';
 
 @Resolver(() => User)
+@UseGuards(GqlThrottlerGuard)
 export class UsersResolver {
   constructor(private usersService: UsersService) {}
 

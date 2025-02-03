@@ -25,15 +25,15 @@
 # NestJS Boilerplate
 
 ## 🚀 Features
-- **NestJS** Framework
-- **Apollo** (GraphQL)
-- **Prisma ORM** (PostgreSQL)
-- **Amazon RDS PostgreSQL** Integration
-- **Authentication with JWT**
-- **Multi-Factor Authentication (MFA)**
-- **Redis for Caching and Session Management**
-- **GraphQL Playground for API Documentation**
-- **Rate Limiting with Throttler**
+- [x] **NestJS** Framework
+- [x] **Apollo** (GraphQL)
+- [x] **Prisma ORM** (PostgreSQL)
+- [x] **Amazon RDS PostgreSQL** Integration
+- [x] **Authentication with JWT**
+- [ ] **Multi-Factor Authentication (MFA)**
+- [ ] **Redis for Caching and Session Management**
+- [x] **GraphQL Playground for API Documentation**
+- [x] **Rate Limiting with Throttler**, fixed window rate limit (ttl 60s, limit 60 requests)
 
 ---
 

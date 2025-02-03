@@ -4,8 +4,10 @@ import { AuthService } from './auth.service';
 import { LoginInput } from './inputs/login.input';
 import { LoginResponse } from './types/login-response.type';
 import { GqlAuthGuard } from './guards/qgl-auth.guard';
+import { GqlThrottlerGuard } from '../common/guards/throttler-gql.guard';
 
 @Resolver('Authentication')
+@UseGuards(GqlThrottlerGuard)
 export class AuthResolver {
   constructor(private readonly authService: AuthService) {}
 

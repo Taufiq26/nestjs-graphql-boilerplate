@@ -1,8 +1,11 @@
+import { APP_GUARD } from '@nestjs/core';
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { PrismaModule } from './prisma/prisma.module';
 import { CacheModule } from '@nestjs/cache-manager';
+import { ThrottlerModule } from '@nestjs/throttler';
+import { GqlThrottlerGuard } from './common/guards/throttler-gql.guard';
 import * as redisStore from 'cache-manager-redis-store';
 
 // Import Core Modules
@@ -31,10 +34,22 @@ import { UsersModule } from './users/users.module';
         },
       },
     }),
+    ThrottlerModule.forRoot({
+      throttlers: [{
+        ttl: 60,
+        limit: 60,
+      }]
+    }),
     // Import Core Modules
     PrismaModule,
     AuthModule,
     UsersModule
   ],
+  providers: [
+    {
+      provide: APP_GUARD,
+      useClass: GqlThrottlerGuard
+    }
+  ]
 })
 export class AppModule {}
