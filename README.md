@@ -24,106 +24,97 @@
 
 # NestJS Boilerplate
 
-Boilerplate project for building a scalable API using NestJS with PostgreSQL, OAuth2 authentication, Multi-Factor Authentication (MFA), Redis, and API documentation using Swagger.
-
-## Features
-- **TypeScript**: Strongly typed language support
-- **PostgreSQL (Amazon RDS)**: Using TypeORM for database integration
-- **OAuth2 Authentication**: Secure authentication with OAuth2
-- **Multi-Factor Authentication (MFA)**: Implemented with Time-based One-Time Password (TOTP)
-- **Redis**: Used for caching and session management
-- **Swagger API Documentation**: Easy API documentation with OpenAPI
-
----
-
-## 📦 Libraries Used
-
-| Library                   | Description |
-|---------------------------|-------------|
-| @nestjs/common            | Core NestJS modules |
-| @nestjs/config            | Environment configuration |
-| @nestjs/typeorm           | ORM integration for PostgreSQL |
-| pg                        | PostgreSQL driver |
-| passport & passport-oauth2 | OAuth2 authentication |
-| @nestjs/jwt               | JWT authentication support |
-| bcryptjs                  | Password hashing |
-| class-validator & class-transformer | Data validation and transformation |
-| ioredis & @nestjs/redis   | Redis integration |
-| swagger-ui-express & @nestjs/swagger | API documentation |
-| speakeasy & qrcode        | Multi-Factor Authentication (MFA) |
+## 🚀 Features
+- **NestJS** Framework
+- **Prisma ORM** (PostgreSQL)
+- **Amazon RDS PostgreSQL** Integration
+- **OAuth2 Authentication with JWT**
+- **Multi-Factor Authentication (MFA)**
+- **Redis for Caching and Session Management**
+- **Swagger API Documentation**
+- **Rate Limiting with Throttler**
 
 ---
 
-## 🚀 Setup & Installation
+## 🛠 Installation & Setup
 
 ### 1️⃣ Clone Repository
-```sh
-git clone https://github.com/your-repo/nestjs-boilerplate.git
-cd nestjs-boilerplate
+```bash
+git clone https://github.com/Taufiq26/nestjs-graphql-boilerplate.git
+cd nestjs-graphql-boilerplate
 ```
 
 ### 2️⃣ Install Dependencies
-```sh
+```bash
 npm install
 ```
 
-### 3️⃣ Create `.env` File
-Create a `.env` file in the root directory and add the following variables:
+### 3️⃣ Configure Environment Variables
+Create a `.env` file in the root directory and configure your database & Redis:
 ```env
-# Database Configuration
-DB_HOST=my-db-instance.rds.amazonaws.com
-DB_PORT=5432
-DB_USER=your_db_user
-DB_PASS=your_db_password
-DB_NAME=your_db_name
-
-# Redis Configuration
-REDIS_HOST=your-redis-endpoint
+DATABASE_URL="postgresql://<DB_USERNAME>:<DB_PASSWORD>@<RDS_ENDPOINT>:5432/<DB_NAME>?schema=public"
+JWT_SECRET="your_jwt_secret"
+REDIS_HOST="your_redis_host"
 REDIS_PORT=6379
-
-# OAuth2 Configuration
-OAUTH2_AUTH_URL=https://your-oauth2-provider.com/auth
-OAUTH2_TOKEN_URL=https://your-oauth2-provider.com/token
-OAUTH2_CLIENT_ID=your-client-id
-OAUTH2_CLIENT_SECRET=your-client-secret
-OAUTH2_CALLBACK_URL=https://your-app.com/auth/callback
-
-# JWT Secret
-JWT_SECRET=your-secret-key
 ```
 
-### 4️⃣ Run Database Migrations (Optional)
-If using TypeORM migrations:
-```sh
-npm run typeorm migration:run
+### 4️⃣ Setup Prisma
+```bash
+npx prisma migrate dev --name init
+npx prisma generate
 ```
 
-### 5️⃣ Start the Application
-```sh
+### 5️⃣ Run the Application
+```bash
 npm run start:dev
 ```
+API is now running at `http://localhost:3000`
 
 ---
 
-## 🛠 API Documentation
-Once the app is running, you can access the API documentation at:
-- **Swagger UI**: [http://localhost:3000/api/docs](http://localhost:3000/api/docs)
-
----
-
-## 🎯 Running with Docker (Optional)
-If you want to use Docker, create a `docker-compose.yml` file and run:
-```sh
-docker-compose up -d
+## 📚 API Documentation
+Swagger is available at:
+```
+http://localhost:3000/api
 ```
 
 ---
 
-## ✅ Testing
-Run tests using Jest:
-```sh
-npm run test
+## 📂 Project Structure
 ```
+nestjs-prisma-boilerplate/
+│── src/
+│   ├── auth/
+│   ├── prisma/
+│   ├── users/
+│   ├── main.ts
+│── prisma/
+│   ├── schema.prisma
+│── .env
+│── README.md
+│── package.json
+```
+
+---
+
+## 🛡 Authentication (JWT + OAuth2)
+- Login API: `POST /auth/login`
+- Register API: `POST /auth/register`
+- OAuth2 Integration (Google, Facebook, etc.)
+
+---
+
+## ⚡ Rate Limiting
+This project includes **Throttler** to prevent API abuse. You can configure rate limits in `app.module.ts`.
+
+---
+
+## 📌 Contributing
+1. Fork the repository
+2. Create a new branch (`git checkout -b feature-branch`)
+3. Commit your changes (`git commit -m 'Add new feature'`)
+4. Push to the branch (`git push origin feature-branch`)
+5. Open a Pull Request
 
 ---
 
