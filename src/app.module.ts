@@ -11,6 +11,7 @@ import * as redisStore from 'cache-manager-redis-store';
 // Import Core Modules
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
+import { EmailService } from './email/email.service';
 
 @Module({
   imports: [
@@ -49,7 +50,8 @@ import { UsersModule } from './users/users.module';
     {
       provide: APP_GUARD,
       useClass: GqlThrottlerGuard
-    }
+    },
+    EmailService
   ]
 })
 export class AppModule {}
