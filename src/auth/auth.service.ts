@@ -1,8 +1,9 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, UnauthorizedException, ConflictException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { PrismaService } from '../prisma/prisma.service';
 import { LoginResponse } from './types/login-response.type';
 import * as bcrypt from 'bcrypt';
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 
 @Injectable()
 export class AuthService {
@@ -11,19 +12,35 @@ export class AuthService {
     private prisma: PrismaService
   ) {}
 
+  async registerUser(email: string, password: string): Promise<any> {
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    try {
+      return await this.prisma.user.create({
+        data: {
+          email,
+          password: hashedPassword,
+        },
+      });
+    } catch (error) {
+      if (error instanceof PrismaClientKnownRequestError) {
+        throw new ConflictException('User with this email already exists');
+      }
+
+      throw error;
+    }
+  }
+
   async validateUser(email: string, password: string): Promise<any> {
     const user = await this.prisma.user.findUnique({
       where: { email },
     });
-
     if (!user) {
       throw new UnauthorizedException('Invalid credentials');
     }
-
-    if (!await bcrypt.compare(password, user.password)) {
+    if (!(await bcrypt.compare(password, user.password))) {
       throw new UnauthorizedException('Invalid credentials');
     }
-
     return user;
   }
 
@@ -32,12 +49,12 @@ export class AuthService {
       email: user.email,
       sub: user.id,
       iat: Math.floor(Date.now() / 1000),
-      exp: Math.floor(Date.now() / 1000) + (7 * 24 * 60 * 60) // 7 days expiration
+      exp: Math.floor(Date.now() / 1000) + 7 * 24 * 60 * 60, // 7 days expiration
     };
     return {
       success: true,
       message: 'Login successful',
-      access_token: this.jwtService.sign(payload)
+      accessToken: this.jwtService.sign(payload),
     };
   }
 
@@ -46,12 +63,13 @@ export class AuthService {
       email: user.email,
       sub: user.id,
       iat: Math.floor(Date.now() / 1000),
-      exp: Math.floor(Date.now() / 1000) + (7 * 24 * 60 * 60) // 7 days for refresh token
+      exp: Math.floor(Date.now() / 1000) + 7 * 24 * 60 * 60, // 7 days for refresh token
     };
+
     return {
       success: true,
       message: 'Token refreshed',
-      access_token: this.jwtService.sign(payload)
+      accessToken: this.jwtService.sign(payload),
     };
-  }  
+  }
 }

@@ -7,5 +7,5 @@ export class LoginResponse extends BaseResponse {
     nullable: true,
     description: 'JWT token for authentication'
   })
-  access_token?: string;
+  accessToken?: string;
 }

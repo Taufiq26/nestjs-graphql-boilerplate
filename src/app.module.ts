@@ -11,6 +11,7 @@ import * as redisStore from 'cache-manager-redis-store';
 // Import Core Modules
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
+import { MailModule } from './mail/mail.module';
 
 @Module({
   imports: [
@@ -43,13 +44,14 @@ import { UsersModule } from './users/users.module';
     // Import Core Modules
     PrismaModule,
     AuthModule,
-    UsersModule
+    UsersModule,
+    MailModule,
   ],
   providers: [
     {
       provide: APP_GUARD,
       useClass: GqlThrottlerGuard
-    }
+    },
   ]
 })
 export class AppModule {}

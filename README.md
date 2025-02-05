@@ -48,6 +48,9 @@ cd nestjs-graphql-boilerplate
 ### 2️⃣ Install Dependencies
 ```bash
 npm install
+
+# or if you using bun
+bun install
 ```
 
 ### 3️⃣ Configure Environment Variables
@@ -57,17 +60,26 @@ DATABASE_URL="postgresql://<DB_USERNAME>:<DB_PASSWORD>@<RDS_ENDPOINT>:5432/<DB_N
 JWT_SECRET="your_jwt_secret"
 REDIS_HOST="your_redis_host"
 REDIS_PORT=6379
+
+MAIL_HOST=
 ```
 
 ### 4️⃣ Setup Prisma
 ```bash
 npx prisma migrate dev --name init
 npx prisma generate
+
+# or if using bun
+bunx prisma migrate dev --name init
+bunx prisma generate
 ```
 
 ### 5️⃣ Run the Application
 ```bash
 npm run start:dev
+
+# or if using bun
+bun run start:dev
 ```
 API is now running at `http://localhost:3000`
 
@@ -88,6 +100,7 @@ nestjs-prisma-boilerplate/
 │   ├── auth/
 │   ├── prisma/
 │   ├── users/
+|   ├── mail/
 │   ├── main.ts
 │── prisma/
 │   ├── schema.prisma
@@ -99,8 +112,8 @@ nestjs-prisma-boilerplate/
 ---
 
 ## 🛡 Authentication (JWT + OAuth2)
-- Login API: `POST /auth/login`
-- Register API: `POST /auth/register`
+- Login Mutation: ``` ```
+- Register Mutation: ``` ```
 - OAuth2 Integration (Google, Facebook, etc.)
 
 ---
